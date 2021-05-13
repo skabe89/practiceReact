@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
+import { connect } from 'react-redux'
 
-export default function Form() {
+function Form(props) {
   const [state, setState] = useState({
     name: "",
     email: ''
@@ -17,6 +18,8 @@ export default function Form() {
   const handleSubmit = (e) => {
     e.preventDefault()
     print()
+    props.setName(state.name)
+    props.setEmail(state.email)
   }
 
   const print = () => {
@@ -41,3 +44,12 @@ export default function Form() {
     </div>
   )
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return{
+    setName: (name) => dispatch({type: "SET_NAME", payload: name}),
+    setEmail: (email) => dispatch({type: "SET_EMAIL", payload: email})
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Form)
